@@ -2,8 +2,8 @@
  * Feature: Cart — Types
  */
 
-import type { Entity } from '@/src/domain/entities';
-import type { Product } from '@/src/features/products/types';
+import type { Entity } from '@/domain/entities';
+import type { Product } from '@/features/products/types';
 
 export interface CartItem extends Entity {
   product: Product;

@@ -2,8 +2,8 @@
  * Feature: Checkout — Types
  */
 
-import type { Entity } from '@/src/domain/entities';
-import type { Cart } from '@/src/features/cart/types';
+import type { Entity } from '@/domain/entities';
+import type { Cart } from '@/features/cart/types';
 
 export type PaymentMethod = 'credit_card' | 'debit_card' | 'paypal';
 

@@ -2,8 +2,8 @@
  * Feature: Products — Types
  */
 
-import type { AuditableEntity } from '@/src/domain/entities';
-import type { ID } from '@/src/shared/types';
+import type { AuditableEntity } from '@/domain/entities';
+import type { ID } from '@/shared/types';
 
 export interface Product extends AuditableEntity {
   name: string;
