@@ -5,7 +5,7 @@
  * No framework dependency. No I/O. The center of Clean Architecture.
  *
  * Usage:
- *   import { ProductEntity, CartItemEntity } from '@/domain/entities';
+ *   import { ProductEntity, CartItemEntity, CartEntity } from '@/domain/entities';
  */
 
 /** Minimal base for any identifiable domain object */
@@ -22,3 +22,4 @@ export interface AuditableEntity extends Entity {
 // ── Business entities ────────────────────────────────────────────────────────
 export type { ProductEntity } from './product.entity';
 export type { CartItemEntity } from './cart-item.entity';
+export type { CartEntity } from './cart.entity';

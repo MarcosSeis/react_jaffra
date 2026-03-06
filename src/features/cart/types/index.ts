@@ -1,27 +1,21 @@
 /**
  * Feature: Cart — Types
+ *
+ * Cart and CartItem are type aliases for the domain entities.
+ * Mutation input types are feature-specific and live here.
  */
 
-import type { Entity } from '@/domain/entities';
-import type { Product } from '@/features/products/types';
+import type { ProductEntity } from '@/domain/entities';
 
-export interface CartItem extends Entity {
-  product: Product;
-  quantity: number;
-}
-
-export interface Cart extends Entity {
-  items: CartItem[];
-  total: number;
-  itemCount: number;
-}
+export type { CartItemEntity as CartItem } from '@/domain/entities';
+export type { CartEntity as Cart } from '@/domain/entities';
 
 export interface AddToCartInput {
-  productId: Product['id'];
+  productId: ProductEntity['id'];
   quantity: number;
 }
 
 export interface UpdateCartItemInput {
-  cartItemId: CartItem['id'];
+  cartItemId: string;
   quantity: number;
 }

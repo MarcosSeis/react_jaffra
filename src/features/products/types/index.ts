@@ -1,33 +1,15 @@
 /**
  * Feature: Products — Types
+ *
+ * Product is a type alias for the domain entity so there is a single
+ * source of truth. Feature-specific input/filter types live here.
  */
 
-import type { AuditableEntity } from '@/domain/entities';
-import type { ID } from '@/shared/types';
-
-export interface Product extends AuditableEntity {
-  name: string;
-  description: string;
-  price: number;
-  imageUrl: string;
-  stock: number;
-  categoryId: ID;
-}
+export type { ProductEntity as Product } from '@/domain/entities';
 
 export interface ProductFilters {
-  categoryId?: ID;
+  category?: string;
   minPrice?: number;
   maxPrice?: number;
   search?: string;
 }
-
-export interface CreateProductInput {
-  name: string;
-  description: string;
-  price: number;
-  imageUrl: string;
-  stock: number;
-  categoryId: ID;
-}
-
-export type UpdateProductInput = Partial<CreateProductInput>;
