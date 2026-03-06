@@ -3,7 +3,12 @@
  *
  * Contracts that the Infrastructure layer must implement.
  * The Domain only knows the interface, never the concrete class.
+ *
+ * Usage:
+ *   import { ProductRepository, CartRepository } from '@/domain/repositories';
  */
+
+// ── Generic base contracts ───────────────────────────────────────────────────
 
 export interface IRepository<T, TId = string | number> {
   findById(id: TId): Promise<T | null>;
@@ -22,3 +27,8 @@ export interface IPaginatedRepository<T, TId = string | number>
     limit: number;
   }>;
 }
+
+// ── Domain-specific contracts ────────────────────────────────────────────────
+
+export type { ProductRepository } from './product.repository';
+export type { CartRepository } from './cart.repository';
