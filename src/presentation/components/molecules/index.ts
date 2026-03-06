@@ -5,3 +5,5 @@
  * Examples: FormField (Label + Input), SearchBar, ProductCard, CartItem.
  * They may hold minimal local UI state (e.g. open/close).
  */
+
+export {};

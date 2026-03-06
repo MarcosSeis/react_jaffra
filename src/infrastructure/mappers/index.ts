@@ -9,3 +9,5 @@ export interface IMapper<TRaw, TDomain> {
   toDomain(raw: TRaw): TDomain;
   toRaw(domain: TDomain): TRaw;
 }
+
+export { productMapper } from './product.mapper';

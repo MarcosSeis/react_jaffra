@@ -1,9 +1,13 @@
 /**
- * Infrastructure Layer — HTTP Client
+ * Infrastructure Layer — API
  *
- * Low-level helpers for communicating with external APIs.
- * Uses the native fetch API available in Next.js App Router.
+ * Generic HTTP client + FakeStore-specific client and raw API types.
  */
+
+export type { ApiProduct, ApiProductRating } from './types';
+export { fakeStoreApi } from './fakeStoreApi';
+
+// ── Generic HTTP client ───────────────────────────────────────────────────────
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? '';
 

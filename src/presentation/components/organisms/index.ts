@@ -5,3 +5,5 @@
  * Examples: Header, ProductList, CartSummary, CheckoutForm.
  * They may connect to application hooks or context.
  */
+
+export {};
