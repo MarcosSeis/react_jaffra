@@ -1,12 +1,13 @@
 'use client';
 
-import { useProducts } from '@/application/hooks';
+import { useProducts, useCart } from '@/application/hooks';
 import { ProductCard } from '@/presentation/components/molecules/ProductCard';
 import { Spinner } from '@/presentation/components/atoms/Spinner';
 import styles from './ProductGrid.module.css';
 
 export function ProductGrid() {
   const { products, loading, error } = useProducts();
+  const { addToCart } = useCart();
 
   if (loading) return <Spinner />;
   if (error)   return <p className={styles.error}>{error.message}</p>;
@@ -21,7 +22,7 @@ export function ProductGrid() {
           price={product.price}
           imageUrl={product.imageUrl}
           rating={product.rating}
-          onAddToCart={(productId) => console.log('Add to cart', productId)}
+          onAddToCart={(productId) => addToCart(productId, 1)}
         />
       ))}
     </div>
