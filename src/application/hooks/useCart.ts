@@ -7,6 +7,17 @@ import { createCartService } from '@application/services';
 
 const cartService = createCartService();
 
+// ── Shared subscriber registry ────────────────────────────────────────────────
+// All mounted useCart instances register their reload fn here.
+// After any mutation, every instance reloads so state stays in sync
+// across components (e.g. Header counter + CartList + ProductGrid).
+
+const subscribers = new Set<() => void>();
+
+function notifyAll() {
+  subscribers.forEach((fn) => fn());
+}
+
 // ── Hook ─────────────────────────────────────────────────────────────────────
 
 export function useCart() {
@@ -27,49 +38,52 @@ export function useCart() {
     }
   }, []);
 
+  // Register / unregister this instance in the shared subscriber set
   useEffect(() => {
+    subscribers.add(reload);
     reload();
+    return () => { subscribers.delete(reload); };
   }, [reload]);
 
   const addToCart = useCallback(async (productId: number, quantity: number) => {
     setError(null);
     try {
       await cartService.addToCart(productId, quantity);
-      await reload();
+      notifyAll();
     } catch (err) {
       setError(err instanceof Error ? err : new Error(String(err)));
     }
-  }, [reload]);
+  }, []);
 
   const removeFromCart = useCallback(async (productId: number) => {
     setError(null);
     try {
       await cartService.removeFromCart(productId);
-      await reload();
+      notifyAll();
     } catch (err) {
       setError(err instanceof Error ? err : new Error(String(err)));
     }
-  }, [reload]);
+  }, []);
 
   const updateQuantity = useCallback(async (productId: number, quantity: number) => {
     setError(null);
     try {
       await cartService.updateQuantity(productId, quantity);
-      await reload();
+      notifyAll();
     } catch (err) {
       setError(err instanceof Error ? err : new Error(String(err)));
     }
-  }, [reload]);
+  }, []);
 
   const clearCart = useCallback(async () => {
     setError(null);
     try {
       await cartService.clearCart();
-      await reload();
+      notifyAll();
     } catch (err) {
       setError(err instanceof Error ? err : new Error(String(err)));
     }
-  }, [reload]);
+  }, []);
 
   return { cart, loading, error, addToCart, removeFromCart, updateQuantity, clearCart, reload };
 }
