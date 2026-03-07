@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { useProduct, useCart } from '@/application/hooks';
 import { Card } from '@/presentation/components/atoms/Card';
@@ -15,6 +16,14 @@ interface ProductDetailProps {
 export function ProductDetail({ id }: ProductDetailProps) {
   const { product, loading, error } = useProduct(id);
   const { addToCart } = useCart();
+  const [added, setAdded] = useState(false);
+
+  function handleAddToCart() {
+    if (!product) return;
+    setAdded(true);
+    addToCart(product.id, 1);
+    setTimeout(() => setAdded(false), 1000);
+  }
 
   if (loading) return <Spinner />;
   if (error)   return <p className={styles.error}>{error.message}</p>;
@@ -37,7 +46,9 @@ export function ProductDetail({ id }: ProductDetailProps) {
           <h2 className={styles.title}>{product.title}</h2>
           <Price amount={product.price} />
           <p className={styles.description}>{product.description}</p>
-          <Button onClick={() => addToCart(product.id, 1)}>Add to Cart</Button>
+          <Button onClick={handleAddToCart} disabled={added}>
+            {added ? 'Added ✓' : 'Add to Cart'}
+          </Button>
         </div>
       </div>
     </Card>
