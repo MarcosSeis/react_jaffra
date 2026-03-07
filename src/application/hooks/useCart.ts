@@ -1,27 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import type { CartEntity } from '@domain/entities';
 import { createCartService } from '@application/services';
+import { useCartStore } from '@/store/cart.store';
 
 // ── Module-level singleton ────────────────────────────────────────────────────
 
 const cartService = createCartService();
 
-// ── Shared subscriber registry ────────────────────────────────────────────────
-// All mounted useCart instances register their reload fn here.
-// After any mutation, every instance reloads so state stays in sync
-// across components (e.g. Header counter + CartList + ProductGrid).
-
-const subscribers = new Set<() => void>();
-
-function notifyAll() {
-  subscribers.forEach((fn) => fn());
-}
-
 // ── Hook ─────────────────────────────────────────────────────────────────────
 
 export function useCart() {
-  const [cart,    setCart]    = useState<CartEntity | null>(null);
+  const cart    = useCartStore((state) => state.cart);
+  const setCart = useCartStore((state) => state.setCart);
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState<Error | null>(null);
 
@@ -36,54 +26,51 @@ export function useCart() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [setCart]);
 
-  // Register / unregister this instance in the shared subscriber set
   useEffect(() => {
-    subscribers.add(reload);
     reload();
-    return () => { subscribers.delete(reload); };
   }, [reload]);
 
   const addToCart = useCallback(async (productId: number, quantity: number) => {
     setError(null);
     try {
       await cartService.addToCart(productId, quantity);
-      notifyAll();
+      await reload();
     } catch (err) {
       setError(err instanceof Error ? err : new Error(String(err)));
     }
-  }, []);
+  }, [reload]);
 
   const removeFromCart = useCallback(async (productId: number) => {
     setError(null);
     try {
       await cartService.removeFromCart(productId);
-      notifyAll();
+      await reload();
     } catch (err) {
       setError(err instanceof Error ? err : new Error(String(err)));
     }
-  }, []);
+  }, [reload]);
 
   const updateQuantity = useCallback(async (productId: number, quantity: number) => {
     setError(null);
     try {
       await cartService.updateQuantity(productId, quantity);
-      notifyAll();
+      await reload();
     } catch (err) {
       setError(err instanceof Error ? err : new Error(String(err)));
     }
-  }, []);
+  }, [reload]);
 
   const clearCart = useCallback(async () => {
     setError(null);
     try {
       await cartService.clearCart();
-      notifyAll();
+      await reload();
     } catch (err) {
       setError(err instanceof Error ? err : new Error(String(err)));
     }
-  }, []);
+  }, [reload]);
 
   return { cart, loading, error, addToCart, removeFromCart, updateQuantity, clearCart, reload };
 }
