@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Card } from '@/presentation/components/atoms/Card';
@@ -15,6 +18,14 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ id, title, price, imageUrl, rating, onAddToCart }: ProductCardProps) {
+  const [added, setAdded] = useState(false);
+
+  function handleAddToCart() {
+    onAddToCart?.(id);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1000);
+  }
+
   return (
     <Card>
       <Link href={`/product/${id}`} className={styles.link}>
@@ -34,7 +45,9 @@ export function ProductCard({ id, title, price, imageUrl, rating, onAddToCart }:
         </div>
       </Link>
       <div className={styles.actions}>
-        <Button onClick={() => onAddToCart?.(id)}>Add to Cart</Button>
+        <Button onClick={handleAddToCart} disabled={added}>
+          {added ? 'Added ✓' : 'Add to Cart'}
+        </Button>
       </div>
     </Card>
   );
