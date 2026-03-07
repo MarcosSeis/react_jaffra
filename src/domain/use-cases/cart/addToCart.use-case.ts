@@ -4,7 +4,7 @@ import type { CartRepository } from '../../repositories/cart.repository';
 export class AddToCartUseCase {
   constructor(private readonly cartRepository: CartRepository) {}
 
-  async execute(product: ProductEntity): Promise<CartEntity> {
+  async execute(product: ProductEntity, quantity: number): Promise<CartEntity> {
     if (!Number.isInteger(product.id) || product.id <= 0) {
       throw new Error(`Cannot add product with invalid id: ${product.id}`);
     }
@@ -13,6 +13,10 @@ export class AddToCartUseCase {
       throw new Error(`Cannot add product with negative price: ${product.price}`);
     }
 
-    return this.cartRepository.addItem(product);
+    if (!Number.isInteger(quantity) || quantity <= 0) {
+      throw new Error(`Quantity must be a positive integer, got: ${quantity}`);
+    }
+
+    return this.cartRepository.addItem(product, quantity);
   }
 }

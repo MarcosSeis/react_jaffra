@@ -21,14 +21,14 @@ export class CartRepositoryImpl implements CartRepository {
     return { ...cartState, items: [...cartState.items] };
   }
 
-  async addItem(product: ProductEntity): Promise<CartEntity> {
+  async addItem(product: ProductEntity, quantity: number): Promise<CartEntity> {
     const existing = cartState.items.find((i) => i.product.id === product.id);
 
     const items: CartItemEntity[] = existing
       ? cartState.items.map((i) =>
-          i.product.id === product.id ? { ...i, quantity: i.quantity + 1 } : i,
+          i.product.id === product.id ? { ...i, quantity: i.quantity + quantity } : i,
         )
-      : [...cartState.items, { id: `item-${product.id}`, product, quantity: 1 }];
+      : [...cartState.items, { id: `item-${product.id}`, product, quantity }];
 
     cartState = buildCart(items);
     return { ...cartState };

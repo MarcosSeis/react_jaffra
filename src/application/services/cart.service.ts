@@ -34,20 +34,9 @@ export class CartService {
     return this.getCartUseCase.execute();
   }
 
-  /**
-   * Resolves the product entity first, then delegates to the use case.
-   * If quantity > 1 the cart item is updated to the requested quantity
-   * in a second step (AddToCartUseCase always adds a single unit).
-   */
   async addToCart(productId: number, quantity: number): Promise<CartEntity> {
     const product = await this.getProductByIdUseCase.execute(productId);
-    const cart    = await this.addToCartUseCase.execute(product);
-
-    if (quantity > 1) {
-      return this.updateCartItemQuantityUseCase.execute(productId, quantity);
-    }
-
-    return cart;
+    return this.addToCartUseCase.execute(product, quantity);
   }
 
   removeFromCart(productId: number): Promise<CartEntity> {

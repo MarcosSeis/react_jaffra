@@ -7,7 +7,7 @@ import type { CartEntity, ProductEntity } from '../entities';
  */
 export interface CartRepository {
   getCart(): Promise<CartEntity>;
-  addItem(product: ProductEntity): Promise<CartEntity>;
+  addItem(product: ProductEntity, quantity: number): Promise<CartEntity>;
   removeItem(productId: number): Promise<CartEntity>;
   updateQuantity(productId: number, quantity: number): Promise<CartEntity>;
   clearCart(): Promise<CartEntity>;

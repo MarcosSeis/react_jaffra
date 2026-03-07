@@ -26,6 +26,13 @@ const cartWithItem: CartEntity = {
   itemCount: 1,
 };
 
+const cartWithThree: CartEntity = {
+  id: 'cart-1',
+  items: [{ ...aCartItem, quantity: 3 }],
+  total: aProduct.price * 3,
+  itemCount: 3,
+};
+
 // ── Mock factory ──────────────────────────────────────────────────────────────
 
 function makeMockCartRepo(): jest.Mocked<CartRepository> {
@@ -56,18 +63,27 @@ describe('AddToCartUseCase', () => {
   it('returns the updated cart after adding the product', async () => {
     repository.addItem.mockResolvedValue(cartWithItem);
 
-    const result = await useCase.execute(aProduct);
+    const result = await useCase.execute(aProduct, 1);
 
     expect(result).toEqual(cartWithItem);
   });
 
-  it('calls repository.addItem with the exact product', async () => {
+  it('calls repository.addItem with the exact product and quantity', async () => {
     repository.addItem.mockResolvedValue(cartWithItem);
 
-    await useCase.execute(aProduct);
+    await useCase.execute(aProduct, 1);
 
-    expect(repository.addItem).toHaveBeenCalledWith(aProduct);
+    expect(repository.addItem).toHaveBeenCalledWith(aProduct, 1);
     expect(repository.addItem).toHaveBeenCalledTimes(1);
+  });
+
+  it('passes quantity > 1 directly to the repository', async () => {
+    repository.addItem.mockResolvedValue(cartWithThree);
+
+    const result = await useCase.execute(aProduct, 3);
+
+    expect(repository.addItem).toHaveBeenCalledWith(aProduct, 3);
+    expect(result).toEqual(cartWithThree);
   });
 
   it('allows a product with price 0 (free product)', async () => {
@@ -75,7 +91,7 @@ describe('AddToCartUseCase', () => {
     const cartWithFree: CartEntity   = { ...emptyCart, items: [{ ...aCartItem, product: freeProduct }] };
     repository.addItem.mockResolvedValue(cartWithFree);
 
-    await expect(useCase.execute(freeProduct)).resolves.toEqual(cartWithFree);
+    await expect(useCase.execute(freeProduct, 1)).resolves.toEqual(cartWithFree);
   });
 
   // ── Guard: invalid id ────────────────────────────────────────────────────────
@@ -83,25 +99,25 @@ describe('AddToCartUseCase', () => {
   it('throws when product id is 0', async () => {
     const invalid = { ...aProduct, id: 0 };
 
-    await expect(useCase.execute(invalid)).rejects.toThrow('invalid id: 0');
+    await expect(useCase.execute(invalid, 1)).rejects.toThrow('invalid id: 0');
   });
 
   it('throws when product id is negative', async () => {
     const invalid = { ...aProduct, id: -1 };
 
-    await expect(useCase.execute(invalid)).rejects.toThrow('invalid id: -1');
+    await expect(useCase.execute(invalid, 1)).rejects.toThrow('invalid id: -1');
   });
 
   it('throws when product id is a non-integer (float)', async () => {
     const invalid = { ...aProduct, id: 1.5 };
 
-    await expect(useCase.execute(invalid)).rejects.toThrow('invalid id: 1.5');
+    await expect(useCase.execute(invalid, 1)).rejects.toThrow('invalid id: 1.5');
   });
 
   it('does NOT call the repository when the id is invalid', async () => {
     const invalid = { ...aProduct, id: 0 };
 
-    await useCase.execute(invalid).catch(() => null);
+    await useCase.execute(invalid, 1).catch(() => null);
 
     expect(repository.addItem).not.toHaveBeenCalled();
   });
@@ -111,13 +127,33 @@ describe('AddToCartUseCase', () => {
   it('throws when product price is negative', async () => {
     const invalid = { ...aProduct, price: -10 };
 
-    await expect(useCase.execute(invalid)).rejects.toThrow('negative price: -10');
+    await expect(useCase.execute(invalid, 1)).rejects.toThrow('negative price: -10');
   });
 
   it('does NOT call the repository when the price is negative', async () => {
     const invalid = { ...aProduct, price: -0.01 };
 
-    await useCase.execute(invalid).catch(() => null);
+    await useCase.execute(invalid, 1).catch(() => null);
+
+    expect(repository.addItem).not.toHaveBeenCalled();
+  });
+
+  // ── Guard: invalid quantity ───────────────────────────────────────────────────
+
+  it('throws when quantity is 0', async () => {
+    await expect(useCase.execute(aProduct, 0)).rejects.toThrow('Quantity must be a positive integer, got: 0');
+  });
+
+  it('throws when quantity is negative', async () => {
+    await expect(useCase.execute(aProduct, -2)).rejects.toThrow('Quantity must be a positive integer, got: -2');
+  });
+
+  it('throws when quantity is a non-integer (float)', async () => {
+    await expect(useCase.execute(aProduct, 1.5)).rejects.toThrow('Quantity must be a positive integer, got: 1.5');
+  });
+
+  it('does NOT call the repository when the quantity is invalid', async () => {
+    await useCase.execute(aProduct, 0).catch(() => null);
 
     expect(repository.addItem).not.toHaveBeenCalled();
   });
@@ -127,6 +163,6 @@ describe('AddToCartUseCase', () => {
   it('propagates unexpected repository errors to the caller', async () => {
     repository.addItem.mockRejectedValue(new Error('Storage unavailable'));
 
-    await expect(useCase.execute(aProduct)).rejects.toThrow('Storage unavailable');
+    await expect(useCase.execute(aProduct, 1)).rejects.toThrow('Storage unavailable');
   });
 });
