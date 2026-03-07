@@ -20,13 +20,13 @@ export interface UseCaseNoInput<TOutput> {
 
 // ── Product use cases ────────────────────────────────────────────────────────
 
-export { GetProductsUseCase }        from './getProducts.use-case';
-export { GetProductByIdUseCase }     from './getProductById.use-case';
+export { GetProductsUseCase }        from './products/getProducts.use-case';
+export { GetProductByIdUseCase }     from './products/getProductById.use-case';
 
 // ── Cart use cases ───────────────────────────────────────────────────────────
 
-export { GetCartUseCase }                from './getCart.use-case';
-export { AddToCartUseCase }              from './addToCart.use-case';
-export { RemoveFromCartUseCase }         from './removeFromCart.use-case';
-export { UpdateCartItemQuantityUseCase } from './updateCartItemQuantity.use-case';
-export { ClearCartUseCase }              from './clearCart.use-case';
+export { GetCartUseCase }                from './cart/getCart.use-case';
+export { AddToCartUseCase }              from './cart/addToCart.use-case';
+export { RemoveFromCartUseCase }         from './cart/removeFromCart.use-case';
+export { UpdateCartItemQuantityUseCase } from './cart/updateCartItemQuantity.use-case';
+export { ClearCartUseCase }              from './cart/clearCart.use-case';

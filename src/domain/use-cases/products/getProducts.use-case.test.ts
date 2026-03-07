@@ -1,6 +1,6 @@
 import { GetProductsUseCase } from './getProducts.use-case';
-import type { ProductRepository } from '../repositories/product.repository';
-import type { ProductEntity } from '../entities';
+import type { ProductRepository } from '../../repositories/product.repository';
+import type { ProductEntity } from '../../entities';
 
 // ── Fixtures ──────────────────────────────────────────────────────────────────
 

@@ -1,6 +1,6 @@
 import { GetCartUseCase } from './getCart.use-case';
-import type { CartRepository } from '../repositories/cart.repository';
-import type { CartEntity, CartItemEntity, ProductEntity } from '../entities';
+import type { CartRepository } from '../../repositories/cart.repository';
+import type { CartEntity, CartItemEntity, ProductEntity } from '../../entities';
 
 // ── Fixtures ──────────────────────────────────────────────────────────────────
 

@@ -1,5 +1,5 @@
-import type { CartEntity } from '../entities';
-import type { CartRepository } from '../repositories/cart.repository';
+import type { CartEntity } from '../../entities';
+import type { CartRepository } from '../../repositories/cart.repository';
 
 export class GetCartUseCase {
   constructor(private readonly cartRepository: CartRepository) {}

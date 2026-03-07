@@ -1,5 +1,5 @@
-import type { ProductEntity } from '../entities';
-import type { ProductRepository } from '../repositories/product.repository';
+import type { ProductEntity } from '../../entities';
+import type { ProductRepository } from '../../repositories/product.repository';
 
 export class GetProductByIdUseCase {
   constructor(private readonly productRepository: ProductRepository) {}

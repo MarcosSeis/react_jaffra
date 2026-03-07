@@ -1,5 +1,5 @@
-import type { CartEntity } from '../entities';
-import type { CartRepository } from '../repositories/cart.repository';
+import type { CartEntity } from '../../entities';
+import type { CartRepository } from '../../repositories/cart.repository';
 
 export class UpdateCartItemQuantityUseCase {
   constructor(private readonly cartRepository: CartRepository) {}
