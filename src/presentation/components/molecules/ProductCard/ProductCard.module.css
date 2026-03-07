@@ -33,3 +33,18 @@
   font-size: 0.8rem;
   color: #6b7280;
 }
+
+.link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.link:hover .title {
+  color: #4f46e5;
+}
+
+.actions {
+  margin-top: 0.75rem;
+}
