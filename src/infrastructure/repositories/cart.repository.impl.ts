@@ -13,36 +13,41 @@ function buildCart(items: CartItemEntity[]): CartEntity {
   return { id: 'cart-1', items, total, itemCount };
 }
 
-function loadCart(): CartEntity {
-  if (typeof window === 'undefined') return buildCart([]);
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return buildCart([]);
-    const parsed: CartEntity = JSON.parse(raw);
-    // Recalculate totals to ensure consistency
-    return buildCart(parsed.items ?? []);
-  } catch {
-    return buildCart([]);
-  }
-}
-
 function saveCart(cart: CartEntity): void {
   if (typeof window === 'undefined') return;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
 }
 
-// ── In-memory singleton (hydrated from localStorage) ─────────────────────────
+// ── In-memory singleton ───────────────────────────────────────────────────────
+// Starts empty so server render and client initial render always match.
+// On the first client-side call (from useEffect), we hydrate from localStorage.
 
-let cartState: CartEntity = loadCart();
+let cartState: CartEntity = buildCart([]);
+let hydrated = false;
+
+function ensureHydrated(): void {
+  if (hydrated || typeof window === 'undefined') return;
+  hydrated = true;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const parsed: CartEntity = JSON.parse(raw);
+    cartState = buildCart(parsed.items ?? []);
+  } catch {
+    // corrupted storage — keep the empty cart
+  }
+}
 
 // ── Implementation ────────────────────────────────────────────────────────────
 
 export class CartRepositoryImpl implements CartRepository {
   async getCart(): Promise<CartEntity> {
+    ensureHydrated();
     return { ...cartState, items: [...cartState.items] };
   }
 
   async addItem(product: ProductEntity, quantity: number): Promise<CartEntity> {
+    ensureHydrated();
     const existing = cartState.items.find((i) => i.product.id === product.id);
 
     const items: CartItemEntity[] = existing
@@ -57,6 +62,7 @@ export class CartRepositoryImpl implements CartRepository {
   }
 
   async removeItem(productId: number): Promise<CartEntity> {
+    ensureHydrated();
     const items = cartState.items.filter((i) => i.product.id !== productId);
     cartState = buildCart(items);
     saveCart(cartState);
@@ -64,6 +70,7 @@ export class CartRepositoryImpl implements CartRepository {
   }
 
   async updateQuantity(productId: number, quantity: number): Promise<CartEntity> {
+    ensureHydrated();
     const items = cartState.items.map((i) =>
       i.product.id === productId ? { ...i, quantity } : i,
     );
@@ -73,6 +80,7 @@ export class CartRepositoryImpl implements CartRepository {
   }
 
   async clearCart(): Promise<CartEntity> {
+    ensureHydrated();
     cartState = buildCart([]);
     saveCart(cartState);
     return { ...cartState };
