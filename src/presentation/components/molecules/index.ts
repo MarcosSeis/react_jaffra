@@ -8,3 +8,4 @@
 
 export * from './ProductCard';
 export * from './CartItem';
+export * from './Modal';
