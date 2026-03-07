@@ -1,0 +1,1 @@
+export { CartPageTemplate } from './CartPageTemplate';

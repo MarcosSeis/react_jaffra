@@ -6,4 +6,5 @@
  * Templates receive content as props/slots; they define the layout, not the data.
  */
 
-export {};
+export * from './ProductsPageTemplate';
+export * from './CartPageTemplate';
