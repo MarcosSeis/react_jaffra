@@ -14,12 +14,12 @@
 .back {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #6b7280;
+  color: #4b5563;
   text-decoration: none;
   width: fit-content;
   transition: color 0.15s ease;
 }
 
 .back:hover {
-  color: #111827;
+  color: #2563eb;
 }

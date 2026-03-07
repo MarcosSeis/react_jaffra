@@ -1,3 +1,5 @@
+import styles from './Price.module.css';
+
 interface PriceProps {
   amount: number;
   currency?: string;
@@ -10,5 +12,5 @@ export function Price({ amount, currency = 'USD' }: PriceProps) {
     minimumFractionDigits: 2,
   }).format(amount);
 
-  return <span>{formatted}</span>;
+  return <span className={styles.price}>{formatted}</span>;
 }
