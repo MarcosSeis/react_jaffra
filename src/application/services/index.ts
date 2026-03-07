@@ -7,3 +7,6 @@
  *
  * Feature-specific services live inside src/features/<feature>/services/.
  */
+
+export { ProductService, createProductService } from './product.service';
+export { CartService,    createCartService    } from './cart.service';
