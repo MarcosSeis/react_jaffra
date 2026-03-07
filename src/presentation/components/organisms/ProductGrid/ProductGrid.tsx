@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { useProducts, useCart } from '@/application/hooks';
-import { ProductCard } from '@/presentation/components/molecules/ProductCard';
-import { Spinner } from '@/presentation/components/atoms/Spinner';
+import { ProductCard, ProductCardSkeleton } from '@/presentation/components/molecules/ProductCard';
 import styles from './ProductGrid.module.css';
 
 export function ProductGrid() {
@@ -13,7 +12,15 @@ export function ProductGrid() {
   const [query,            setQuery]           = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
 
-  if (loading) return <Spinner />;
+  if (loading) {
+    return (
+      <div className={styles.grid}>
+        {Array.from({ length: 8 }).map((_, index) => (
+          <ProductCardSkeleton key={index} />
+        ))}
+      </div>
+    );
+  }
 
   if (error) {
     return (

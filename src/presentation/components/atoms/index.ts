@@ -10,3 +10,4 @@ export * from './Button';
 export * from './Card';
 export * from './Spinner';
 export * from './Price';
+export * from './Skeleton';
