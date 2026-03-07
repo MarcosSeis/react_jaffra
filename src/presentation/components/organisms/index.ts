@@ -8,3 +8,4 @@
 
 export * from './ProductGrid';
 export * from './CartList';
+export * from './ProductDetail';

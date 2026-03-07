@@ -8,3 +8,4 @@
 
 export * from './ProductsPageTemplate';
 export * from './CartPageTemplate';
+export * from './ProductDetailTemplate';
