@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useProducts, useCart } from '@/application/hooks';
 import { ProductCard, ProductCardSkeleton } from '@/presentation/components/molecules/ProductCard';
+import { ProductFilters } from '@/presentation/components/molecules/ProductFilters';
 import styles from './ProductGrid.module.css';
 
 export function ProductGrid() {
@@ -39,24 +40,13 @@ export function ProductGrid() {
 
   return (
     <div>
-      <div className={styles.filters}>
-        <input
-          type="text"
-          className={styles.search}
-          placeholder="Search products..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <select
-          className={styles.select}
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-        >
-          {categories.map((cat) => (
-            <option key={cat} value={cat}>{cat}</option>
-          ))}
-        </select>
-      </div>
+      <ProductFilters
+        query={query}
+        onQueryChange={setQuery}
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+        categories={categories}
+      />
 
       {filteredProducts.length === 0
         ? <p className={styles.empty}>No products found.</p>

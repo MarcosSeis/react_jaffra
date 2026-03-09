@@ -11,3 +11,5 @@ export * from './Card';
 export * from './Spinner';
 export * from './Price';
 export * from './Skeleton';
+export * from './SearchInput';
+export * from './Select';
