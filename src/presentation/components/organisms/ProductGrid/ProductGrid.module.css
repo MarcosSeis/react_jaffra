@@ -5,35 +5,6 @@
   padding: 1.5rem;
 }
 
-.errorBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 2rem;
-}
-
-.error {
-  color: #dc2626;
-  text-align: center;
-  font-weight: 500;
-}
-
-.retry {
-  padding: 0.5rem 1.25rem;
-  border: none;
-  border-radius: 0.375rem;
-  background-color: #2563eb;
-  color: #ffffff;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.retry:hover {
-  background-color: #1d4ed8;
-}
 
 .empty {
   color: #4b5563;
