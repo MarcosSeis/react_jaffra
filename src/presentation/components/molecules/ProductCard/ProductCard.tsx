@@ -48,6 +48,9 @@ export function ProductCard({ id, title, price, imageUrl, rating, onAddToCart }:
         <Button onClick={handleAddToCart} disabled={added}>
           {added ? 'Added ✓' : 'Add to Cart'}
         </Button>
+        <Link href={`/product/${id}`}>
+          <Button variant="secondary">View Details</Button>
+        </Link>
       </div>
     </Card>
   );

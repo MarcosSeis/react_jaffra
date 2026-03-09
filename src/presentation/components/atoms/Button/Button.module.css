@@ -26,3 +26,13 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.secondary {
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  color: #111827;
+}
+
+.secondary:hover:not(:disabled) {
+  background: #f3f4f6;
+}
