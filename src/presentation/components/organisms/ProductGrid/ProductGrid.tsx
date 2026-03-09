@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useProducts, useCart } from '@/application/hooks';
 import { ProductCard, ProductCardSkeleton } from '@/presentation/components/molecules/ProductCard';
 import { ProductFilters } from '@/presentation/components/molecules/ProductFilters';
+import { ErrorState } from '@/presentation/components/molecules/ErrorState';
 import styles from './ProductGrid.module.css';
 
 export function ProductGrid() {
@@ -24,12 +25,7 @@ export function ProductGrid() {
   }
 
   if (error) {
-    return (
-      <div className={styles.errorBox}>
-        <p className={styles.error}>Error loading products</p>
-        <button className={styles.retry} onClick={reload}>Retry</button>
-      </div>
-    );
+    return <ErrorState message="Error loading products" onRetry={reload} />;
   }
 
   const categories = ['All', ...Array.from(new Set(products.map((p) => p.category)))];

@@ -13,3 +13,4 @@ export * from './Price';
 export * from './Skeleton';
 export * from './SearchInput';
 export * from './Select';
+export * from './ErrorMessage';
