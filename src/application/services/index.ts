@@ -5,7 +5,7 @@
  * they coordinate entities, repositories and use cases to fulfill
  * application-level operations (e.g. "place an order").
  *
- * Feature-specific services live inside src/features/<feature>/services/.
+ * Feature-specific services live inside src/application/services/.
  */
 
 export { ProductService, createProductService } from './product.service';
