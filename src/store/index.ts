@@ -5,7 +5,7 @@
  * Each slice/atom is colocated in its feature folder where possible.
  *
  * Example slices to implement:
- *   - cartSlice   → src/features/cart/
- *   - authSlice   → src/features/auth/
+ *   - cartSlice   → src/store/cart/
+ *   - authSlice   → src/store/auth/
  *   - uiSlice     → here (cross-cutting: modals, toasts, theme)
  */

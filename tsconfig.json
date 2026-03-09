@@ -26,7 +26,6 @@
       "@infrastructure/*": ["./src/infrastructure/*"],
       "@presentation/*": ["./src/presentation/*"],
       "@shared/*": ["./src/shared/*"],
-      "@features/*": ["./src/features/*"],
       "@lib/*": ["./src/lib/*"],
       "@config/*": ["./src/config/*"],
       "@store/*": ["./src/store/*"]
