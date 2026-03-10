@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useProducts, useCart } from '@/application/hooks';
 import { ProductCard, ProductCardSkeleton } from '@/presentation/components/molecules/ProductCard';
 import { ProductFilters } from '@/presentation/components/molecules/ProductFilters';
@@ -10,6 +11,7 @@ import styles from './ProductGrid.module.css';
 export function ProductGrid() {
   const { products, loading, error, reload } = useProducts();
   const { addToCart } = useCart();
+  const router = useRouter();
 
   const [query,            setQuery]           = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -55,8 +57,10 @@ export function ProductGrid() {
                 title={product.title}
                 price={product.price}
                 imageUrl={product.imageUrl}
+                category={product.category}
                 rating={product.rating}
                 onAddToCart={(productId) => addToCart(productId, 1)}
+                onViewDetail={(productId) => router.push(`/product/${productId}`)}
               />
             ))}
           </div>
