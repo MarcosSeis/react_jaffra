@@ -12,6 +12,9 @@
   --color-text-secondary: #555555;
   --color-text-muted: #888888;
 
+  /* HEADING */
+  --color-heading: #111111;
+
   /* TYPOGRAPHY */
   --font-primary: 'Roboto', sans-serif;
 

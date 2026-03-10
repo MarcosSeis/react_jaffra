@@ -14,7 +14,7 @@
 .back {
   font-size: var(--font-size-sm);
   font-weight: 500;
-  color: #fff;
+  color: var(--color-heading);
   text-decoration: none;
   width: fit-content;
   transition: color 0.15s ease;
