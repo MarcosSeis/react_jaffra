@@ -1,6 +1,6 @@
 .skeleton {
   width: 100%;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   background: linear-gradient(
     90deg,
     #f0f0f0 25%,
