@@ -1,6 +1,6 @@
 .filters {
   display: flex;
-  gap: 1rem;
-  padding: 1.5rem 1.5rem 0;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg) var(--spacing-lg) 0;
   flex-wrap: wrap;
 }

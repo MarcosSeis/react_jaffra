@@ -1,7 +1,7 @@
 .header {
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 0 1rem;
+  background-color: var(--color-background);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0 var(--spacing-md);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -17,26 +17,26 @@
 }
 
 .title {
-  font-size: 1.25rem;
+  font-size: var(--font-size-lg);
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: #111827;
+  color: var(--color-text-primary);
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: var(--spacing-lg);
 }
 
 .link {
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   font-weight: 500;
-  color: #111827;
+  color: var(--color-text-primary);
   text-decoration: none;
   transition: color 0.15s ease;
 }
 
 .link:hover {
-  color: #2563eb;
+  color: var(--color-accent);
 }

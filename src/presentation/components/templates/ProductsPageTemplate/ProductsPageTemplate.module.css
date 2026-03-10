@@ -1,6 +1,6 @@
 .main {
   min-height: 100vh;
-  padding: 2rem 1rem;
+  padding: var(--spacing-xl) var(--spacing-md);
 }
 
 .container {
@@ -8,11 +8,11 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--spacing-lg);
 }
 
 .title {
   font-size: 1.875rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-heading);
 }
