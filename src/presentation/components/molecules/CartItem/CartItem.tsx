@@ -39,11 +39,20 @@ export function CartItem({
         </div>
         <div className={styles.info}>
           <h4 className={styles.title}>{title}</h4>
-          <Price amount={price} />
           <div className={styles.controls}>
             <Button onClick={() => onDecrease?.(productId)}>−</Button>
             <span className={styles.quantity}>{quantity}</span>
             <Button onClick={() => onIncrease?.(productId)}>+</Button>
+          </div>
+          <div className={styles.pricing}>
+            <span className={styles.price}>
+              <Price amount={price} />
+            </span>
+            <span className={styles.pricingX}>×</span>
+            <span className={styles.pricingQty}>{quantity}</span>
+            <span className={styles.subtotal}>
+              <Price amount={price * quantity} />
+            </span>
           </div>
         </div>
         <Button onClick={() => onRemove?.(productId)}>Remove</Button>

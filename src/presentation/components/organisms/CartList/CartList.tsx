@@ -50,15 +50,25 @@ export function CartList() {
         onClose={() => setCheckoutOpen(false)}
         title="Order Summary"
       >
-        <div className={styles.summary}>
-          <p className={styles.summaryRow}>
-            <span>Total items:</span>
-            <span>{cart.itemCount}</span>
-          </p>
-          <p className={styles.summaryRow}>
-            <span>Total price:</span>
-            <Price amount={cart.total} />
-          </p>
+        <div className={styles.summaryItems}>
+          {cart.items.map((item) => (
+            <div key={item.id} className={styles.summaryItem}>
+              <span className={styles.summaryItemTitle}>{item.product.title}</span>
+              <div className={styles.summaryItemPricing}>
+                <Price amount={item.product.price} />
+                <span className={styles.summaryItemX}>×</span>
+                <span className={styles.summaryItemQty}>{item.quantity}</span>
+                <span className={styles.summaryItemSubtotal}>
+                  <Price amount={item.product.price * item.quantity} />
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className={styles.summaryDivider} />
+        <div className={styles.summaryTotal}>
+          <span>Total</span>
+          <Price amount={cart.total} />
         </div>
         <div className={styles.modalActions}>
           <Button onClick={handleConfirm}>Confirm Purchase</Button>
